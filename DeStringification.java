@@ -10,13 +10,22 @@ public class DeStringification{
    public static void checkStringify(String str){
     String stringify = new String(str);
         
-    boolean notstr = stringify.matches("\\[a-z&&[^btn\'\"\\]]");
-    if(notstr){
+    boolean notstr = stringify.matches("[\\[a-z&&[^btn\'\"\\]]]");
+    if(notstr || stringify.trim().equals("\\")){
          System.out.println("Invalid String");}
     else{ 
-        replace(stringify);
+         for(int index = 0; index < stringify.split("").length; index++){
+		if(index+1 < stringify.split("").length && stringify.split("")[index].equals("\\") && stringify.split("")[index+1].equals(" ")){
+			System.out.println("Invalid String");
+                         break;}
+		else if(index+1 == stringify.split("").length && stringify.split("")[index].equals("\\")){
+ 			System.out.println("Invalid String");
+			break;
+			}
+		else{ notstr = true;}
       	 }
-
+        if(notstr){ replace(stringify); }
+}
 }
     public static void replace(String str){
           String string[] = str.trim().split("");
